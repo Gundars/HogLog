@@ -20,8 +20,6 @@
     "mockery/mockery": "0.*"
   },
   "autoload": {
-    "psr-4": {
-      "HogLog\\": "src"
-    }
+    "psr-4": {"HogLog\\": "src/HogLog/"}
   }
 }

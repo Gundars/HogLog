@@ -5,17 +5,16 @@ namespace HogLog;
 use Illuminate\Filesystem\Filesystem;
 use Exception;
 
-class HogLogServiceProvider
+class HogLogService
 {
     protected $files;
 
     public function __construct($app)
     {
-        $serviceProviders = [
-            '',
-            ''
-        ];
-        $this->registerServiceProviders($serviceProviders);
+        //$serviceProviders = [
+        //
+        //];
+        //$this->registerServiceProviders($app, $serviceProviders);
         $this->bootRoutes();
         $this->files = new Filesystem;
     }
@@ -30,14 +29,14 @@ class HogLogServiceProvider
         require __DIR__ . '/Http/routes.php';
     }
 
-    protected function registerServiceProviders(array $providers = [])
+    protected function registerServiceProviders($app, array $providers = [])
     {
         if (count($providers) <= 0) {
-            throw new Exception('Required paraemeter $providers is empty or missing');
+            throw new Exception('Required parameter $providers is empty or missing');
         }
 
         foreach ($providers as $providerName) {
-            $this->app->register($providerName);
+            $app->register($providerName);
         }
     }
 }
