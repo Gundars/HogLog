@@ -1,6 +1,6 @@
 {
   "name": "gundars/hoglog",
-  "description": "LogHog is a log viewer for your remote Lumen installation",
+  "description": "HogLog is a log viewer API for your remote Lumen installation",
   "keywords": ["view", "remote", "log","file"],
   "homepage": "https://github.com/Gundars/HogLog",
   "type": "library",
