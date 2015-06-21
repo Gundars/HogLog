@@ -2,20 +2,15 @@
 
 $uri = \Request::url();
 $app = \App::getInstance();
-
-//Prepend custom route f.i. to block on production; end with /
-$rootPrefix = (!defined('HOGLOG_ROUTE_PREFIX')) ? 'hoglog/' : HOGLOG_ROUTE_PREFIX;
-$baseDir    = (!defined('HOGLOG_BASE_DIR')) ? 'storage/logs' : HOGLOG_BASE_DIR;
+$rootPrefix = config('hoglog.rootPrefix', '/hoglog/');
 
 $app->group(
     [
-        'prefix'     => $rootPrefix,
-        //'namespace'  => 'HogLog\Http\Controllers',
-        'middleware' => ''
+        'prefix'    => $rootPrefix,
+        'namespace' => 'HogLog\Http\Controllers'
     ],
     function ($app) {
-        $app->get('/', view('logList'));
-        $app->get('/log/{logfile}', view('logFile'));
+        $app->get('/', 'HogLogController@loglist');
+        $app->get('/log/{logfile}', 'HogLogController@logfile');
     }
 );
-

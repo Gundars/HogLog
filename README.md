@@ -13,3 +13,22 @@
 
 ```
 
+####Installation
+
+Add a dependency to your composer.json:
+```php
+"gundars/hoglog": "dev-master"
+```
+
+Add the following lines to your /bootstrap/app.php:
+```php
+config(
+    [
+        'hoglog' => [
+            'rootPrefix' => 'configuration/hoglog/',
+            'logdir'     => storage_path() . '/logs'
+        ]
+    ]
+);
+$app->register('HogLog\HogLogServiceProvider');
+```
