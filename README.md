@@ -15,10 +15,11 @@
 
 ####Installation
 
-Add a dependency to your composer.json:
+Add a dependency to your composer, execute
 ```php
-"gundars/hoglog": "dev-master"
+composer require gundars/hoglog 0.1
 ```
+
 
 Add the following lines to your /bootstrap/app.php:
 ```php
