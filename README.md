@@ -33,3 +33,7 @@ config(
 );
 $app->register('HogLog\HogLogServiceProvider');
 ```
+
+If your installation is not booting, but you need laravel-less log reader, use the class found in /extra/PlanB.php
+Format: ` 'class::getInstance()->view(string $jailDir[, array $whitelistFilenames])
+Sample: `\HogLog\PlanB::getInstance()->view('../', ['.log', '.txt']);`
