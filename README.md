@@ -43,7 +43,7 @@ Hitting the URL of the file it is included in with `browse` parameter will eithe
 
 ####Samples:
 
-#####Allow reading of all files in logs directory
+#####Allow reading all files in logs directory
 Setup: 
 ```php
 \HogLog\PlanB::getInstance()->view('../storage/logs/');
@@ -56,7 +56,7 @@ example.com/file-including-planb.php/?browse=../storage/logs/
 example.com/file-including-planb.php/?browse=../storage/logs/lumen.log
 ```
 
-#####Allow reading of all files in storage directory with .txt extension
+#####Allow reading all files in storage directory with .txt extension
 Setup: 
 ```php
 \HogLog\PlanB::getInstance()->view('../storage/', ['.txt']);
@@ -66,7 +66,7 @@ Call:
 example.com/file-including-planb.php/?browse=../storage/file.txt
 ```
 
-#####Allow reading single file
+#####Allow reading only single file lumen.log
 Setup: 
 ```php
 \HogLog\PlanB::getInstance()->view('../storage/logs/', ['lumen.log']);
