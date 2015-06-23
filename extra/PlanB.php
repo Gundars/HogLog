@@ -6,13 +6,8 @@ namespace HogLog;
  * Class HogLogPlanB
  * Browse directories and files via API
  * Used when your Laravel/Lumen installation does not boot
- * HogLog\PlanB::getInstance()->view(string $jailDir[, array $whitelistFilenames])
+ * HogLog\PlanB::getInstance()->view(string $jailDir[, array $whitelist])
  * HogLog\PlanB::getInstance()->view('../', ['.log', '.txt']);
- *
- * todo: enable whitelist
- * todo: ensure jaildir boundaries
- * todo: optional view() parameter enableDir
- *
  */
 class PlanB
 {
@@ -27,9 +22,9 @@ class PlanB
     private static $jailDir;
 
     /**
-     * @var null/array List of allowed filenames
+     * @var array List of allowed filenames
      */
-    private static $whitelistFilenames = null;
+    private static $whitelist = null;
 
     /**
      * @var array current url
@@ -43,7 +38,7 @@ class PlanB
 
     /**
      * Returns the instance of this class.
-     * @return HogLogPlanB singleton instance.
+     * @return PlanB singleton instance.
      */
     public static function getInstance()
     {
@@ -54,33 +49,78 @@ class PlanB
         return static::$instance;
     }
 
-    public static function view($jailDir = '/', $whitelistFilenames = null)
+    /**
+     * @param string $jailDir
+     * @param array  $whitelist
+     */
+    public static function view($jailDir = './', $whitelist = [])
     {
-        self::$jailDir            = $jailDir;
-        self::$whitelistFilenames = $whitelistFilenames;
+        self::$jailDir   = $jailDir;
+        self::$whitelist = $whitelist;
 
-        self::setupRequestMethod();
-        $currentUrl    = "//$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        self::$urlInfo = self::parseUrl($currentUrl);
-
-        echo self::output();
+        try {
+            self::setupRequestMethod();
+            self::$urlInfo = self::parseUrl();
+            echo self::output();
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
     }
 
+    /**
+     * @return string Prepared HTML output
+     * @throws \Exception
+     */
     protected static function output()
     {
-        $jailDir  = __DIR__ . '/' . self::$jailDir;
-        $browse   = self::$urlInfo['browse'];
-        $html = self::readOrWheep($jailDir . '/' . $browse);
+        $browse = self::$urlInfo['browse'];
+        $html   = self::readOrWheep(__DIR__ . '/' . $browse);
         return $html;
+    }
+
+    /**
+     * Compare users selected path with jaildir path
+     * @param string $path
+     * @return bool
+     */
+    protected static function isInsideJailDir($path)
+    {
+        $jailDir = __DIR__ . '/' . self::$jailDir;
+        return strpos(realpath($path), realpath($jailDir)) !== false;
+    }
+
+    /**
+     * Compare users selected filename against whitelist
+     * @param string $file filename + extension
+     * @return bool
+     */
+    protected static function isWhitelisted($file)
+    {
+        if (!is_array(self::$whitelist) || count(self::$whitelist) === 0) {
+            return true;
+        }
+        foreach (self::$whitelist as $fileName) {
+            if (strpos($file, $fileName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     protected static function readOrWheep($path)
     {
+        if (!self::isInsideJailDir($path)) {
+            throw new \Exception("Restricted directory $path");
+        }
+
         if (!file_exists($path)) {
             throw new \Exception("Directory/file does not exist $path");
         }
 
         if (is_file($path)) {
+            if (!self::isWhitelisted($path)) {
+                throw new \Exception("File is blacklisted $path");
+            }
             $contents = self::readFile($path);
         } elseif (is_dir($path)) {
             $contents = self::readDir($path, "Directory $path contents: <br/>");
@@ -117,7 +157,8 @@ class PlanB
      * @param string $html
      * @return string
      */
-    protected static function readDir($path, $html = '') {
+    protected static function readDir($path, $html = '')
+    {
         $html .= '<p>' . implode('</p><p>', scandir($path)) . '</p>';
         return $html;
     }
@@ -133,8 +174,12 @@ class PlanB
      */
     protected static function parseUrl($url)
     {
-        $url = parse_url($url);
-        if (array_key_exists('browse', self::$requestMethod)) {
+        $url           = isset($url) ? $url : "//$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $url           = parse_url($url);
+        $url['browse'] = './';
+        if (array_key_exists('browse', self::$requestMethod)
+            && !empty(self::$requestMethod['browse'])
+        ) {
             $url['browse'] = self::$requestMethod['browse'];
         }
         return $url;
@@ -184,5 +229,3 @@ class PlanB
     {
     }
 }
-
-\HogLog\PlanB::getInstance()->view('../', ['.log', '.txt']);
