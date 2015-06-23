@@ -13,7 +13,7 @@
 
 ```
 
-####Installation
+###Installation
 
 Add a dependency to your composer, execute
 ```php
@@ -41,9 +41,9 @@ Format:
 
 Hitting the URL of the file it is included in with `browse` parameter will either print the file contents, or list of items in case of a directory.
 
-#####Samples:
-Assuming called from file
-Allow reading of all files in logs directory
+####Samples:
+
+#####Allow reading of all files in logs directory
 Setup: 
 ```php
 \HogLog\PlanB::getInstance()->view('../storage/logs/');
@@ -56,7 +56,7 @@ example.com/file-including-planb.php/?browse=../storage/logs/
 example.com/file-including-planb.php/?browse=../storage/logs/lumen.log
 ```
 
-Allow reading of all files in storage directory with .txt extension
+#####Allow reading of all files in storage directory with .txt extension
 Setup: 
 ```php
 \HogLog\PlanB::getInstance()->view('../storage/', ['.txt']);
@@ -66,7 +66,7 @@ Call:
 example.com/file-including-planb.php/?browse=../storage/file.txt
 ```
 
-Allow reading single file
+#####Allow reading single file
 Setup: 
 ```php
 \HogLog\PlanB::getInstance()->view('../storage/logs/', ['lumen.log']);
