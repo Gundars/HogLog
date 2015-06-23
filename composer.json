@@ -1,6 +1,6 @@
 {
   "name": "gundars/hoglog",
-  "description": "HogLog is a log viewer API for your remote Lumen installation",
+  "description": "HogLog is a log viewer API for your remote Laravel/Lumen installation",
   "keywords": ["view", "remote", "log","file"],
   "homepage": "https://github.com/Gundars/HogLog",
   "type": "library",
@@ -20,6 +20,11 @@
     "mockery/mockery": "0.*"
   },
   "autoload": {
-    "psr-4": {"HogLog\\": "src/HogLog/"}
+    "psr-4": {
+      "HogLog\\": "src/HogLog/"
+    },
+    "files": [
+      "extra/PlanB.php"
+    ]
   }
 }
