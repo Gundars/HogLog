@@ -12,6 +12,7 @@
 
 
 ```
+HogLog is log file viewer API for your remote Laravel/Lumen installation
 
 ###Installation
 
