@@ -36,11 +36,13 @@ $app->register('HogLog\HogLogServiceProvider');
 ###Plan B
 If your installation is not booting, but you need laravel-less log reader, use the /extra/PlanB class
 
-Format: ` 'class::getInstance()->view(string $jailDir[, array $whitelistFilenames])`
+Format:
+```class::getInstance()->view(string $jailDir[, array $whitelistFilenames])```
 
-Sample: `\HogLog\PlanB::getInstance()->view('../', ['.log', '.txt']);`
+Sample:
+```\HogLog\PlanB::getInstance()->view('../', ['.log', '.txt']);```
 
-Hitting the URL of the file it is included in wtih `browse` parameter will either print the file contents, or list of items in case of a directory.
+Hitting the URL of the file it is included in with `browse` parameter will either print the file contents, or list of items in case of a directory.
 
 `example.com?browse=../`
 
