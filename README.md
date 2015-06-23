@@ -51,9 +51,9 @@ Code:
 URLs:  
 ```php
 #reads dir
-example.com/file-including-planb.php/?browse=../storage/logs/
+example.com/file-calling-planb.php/?browse=../storage/logs/
 #reads file
-example.com/file-including-planb.php/?browse=../storage/logs/lumen.log
+example.com/file-calling-planb.php/?browse=../storage/logs/lumen.log
 ```
 
 #####Allow reading all files in storage directory with .txt extension
@@ -63,7 +63,7 @@ Code:
 ```
 URL:  
 ```php
-example.com/file-including-planb.php/?browse=../storage/file.txt
+example.com/file-calling-planb.php/?browse=../storage/file.txt
 ```
 
 #####Allow reading only single file lumen.log
@@ -73,5 +73,5 @@ Code:
 ```
 URL:  
 ```php
-example.com/file-including-planb.php/?browse=../storage/file.txt
+example.com/file-calling-planb.php/?browse=../storage/file.txt
 ```
