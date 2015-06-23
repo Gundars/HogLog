@@ -39,11 +39,39 @@ If your installation is not booting, but you need laravel-less log reader, use t
 Format:
 ```class::getInstance()->view(string $jailDir[, array $whitelistFilenames])```
 
-Sample:
-```\HogLog\PlanB::getInstance()->view('../', ['.log', '.txt']);```
-
 Hitting the URL of the file it is included in with `browse` parameter will either print the file contents, or list of items in case of a directory.
 
-`example.com/file/including/planb.php/?browse=../`
+#####Samples:
+Assuming called from file
+Allow reading of all files in logs directory
+Setup: 
+```php
+\HogLog\PlanB::getInstance()->view('../storage/logs/');
+```
+Calls:  
+```php
+#reads dir
+example.com/file-including-planb.php/?browse=../storage/logs/
+#reads file
+example.com/file-including-planb.php/?browse=../storage/logs/lumen.log
+```
 
-`example.com/file/including/planb.php/?browse=../app/storage/logs/`
+Allow reading of all files in storage directory with .txt extension
+Setup: 
+```php
+\HogLog\PlanB::getInstance()->view('../storage/', ['.txt']);
+```
+Call:  
+```php
+example.com/file-including-planb.php/?browse=../storage/file.txt
+```
+
+Allow reading single file
+Setup: 
+```php
+\HogLog\PlanB::getInstance()->view('../storage/logs/', ['lumen.log']);
+```
+Call:  
+```php
+example.com/file-including-planb.php/?browse=../storage/file.txt
+```
