@@ -44,6 +44,6 @@ Sample:
 
 Hitting the URL of the file it is included in with `browse` parameter will either print the file contents, or list of items in case of a directory.
 
-`example.com?browse=../`
+`example.com/file/including/planb.php/?browse=../`
 
-`example.com?browse=../app/storage/logs/`
+`example.com/file/including/planb.php/?browse=../app/storage/logs/`
