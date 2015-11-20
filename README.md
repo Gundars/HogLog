@@ -18,7 +18,7 @@ HogLog is log file viewer API for your remote Laravel/Lumen installation
 
 Add a dependency to your composer, execute
 ```php
-composer require gundars/hoglog ~0.3
+composer require gundars/hoglog ~0.3.*
 ```
 
 
